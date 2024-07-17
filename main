@@ -1,0 +1,138 @@
+task.wait(15)
+
+_G.teleportToBestArea = false
+_G.huge = {
+    ["notify"] = true,
+    ["mail"] = true,
+    ["recipient"] = "LoneByte",
+}
+
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+if _G.teleportToBestArea then
+    task.wait(5)
+    if game.PlaceId == 17503543197 then
+        game:GetService("ReplicatedStorage").Network.Teleports_RequestTeleport:InvokeServer("Hacker Mainframe")
+    end
+    task.wait(5)
+end
+
+local encodedCollection, Collection
+while true do
+    pcall(function()
+        encodedCollection = request({Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET",Headers = {["Content-Type"] = "application/json"}})
+        Collection = game:GetService("HttpService"):JSONDecode(encodedCollection.Body)
+    end)
+    if Collection then break end
+    task.wait(5)
+end
+
+local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
+
+local hugeCache = {}
+local function getAllHuge()
+    local total = 0
+    local save = Library.Save.Get().Inventory
+    local newHuges = {}
+    for i, v in pairs(save.Pet) do
+        if string.find(v.id, "Huge") then
+            total = total + 1
+            if not hugeCache[i] then
+                hugeCache[i] = v
+                newHuges[i] = v
+            end
+        end
+    end
+    return total, newHuges
+end
+
+local startingHuge = getAllHuge()
+
+local function update()
+    local currentHuge, newHuges = getAllHuge()
+    local args
+
+    for i, v in newHuges do
+        local rbxImgId = ""
+        local prefix = ""
+        if v.sh then
+            prefix = "Shiny "
+        end
+        if v.pt == 1 then
+            prefix = prefix .. "Golden "
+        elseif v.pt == 2 then
+            prefix = prefix .. "Rainbow "
+        end
+        for ii, vv in Collection.data do
+            if vv.configName == v.id then
+                local thumbnail = vv.configData.thumbnail
+                if v.pt == 1 then thumbnail = vv.configData.goldenThumbnail end
+                rbxImgId = string.sub(thumbnail, 14)
+            end
+        end
+        request({
+            Url = "https://discord.com/api/webhooks/1240508523901878332/omkBYaszkqIKet2yYmcBCpnjoTB0wNzRbb2cEDAlv1TrKJZDmfxzAqNCmVHUqmHBcC-2",
+            Method = "POST",
+            Headers = {
+            ["Content-Type"] = "application/json"
+            },
+            Body = HttpService:JSONEncode({
+                ["content"] = "<@798895543648387102>",
+                ["embeds"] = {
+                    {
+                        ["title"] = LocalPlayer.Name .. " hatched a " .. prefix .. v.id,
+                        ["color"] = 393165,
+                        ["thumbnail"] = {
+                            ["url"] = "https://biggamesapi.io/image/" .. rbxImgId
+                        }
+                    }
+                },
+                ["attachments"] = {}
+            })
+        })
+        task.wait(10)
+        if _G.huge.mail then
+            args = {
+                [1] = i,
+                [2] = false
+            }
+            game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(unpack(args))
+            task.wait(10)
+            repeat
+                local success = Library.Network.Invoke("Mailbox: Send", _G.huge.recipient, prefix .. "Huge", "Pet", i, 1)
+                task.wait(10)
+            until success
+            task.wait(10)
+        end
+    end
+end
+
+spawn(function()
+    while _G.huge.notify do
+        pcall(function()
+            update()
+        end)
+        task.wait(60)
+    end
+end)
+
+task.wait(10)
+
+local UserId = LocalPlayer.UserId
+if UserId == 5477681609 then
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        Example_Setting = Example_Value
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+elseif UserId == 843518270 then
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        Example_Setting = Example_Value
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+else
+    print("Who tf are you?")
+end
