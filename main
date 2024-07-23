@@ -20,13 +20,17 @@ if _G.teleportToBestArea then
     task.wait(5)
 end
 
+print("UserId : " .. tostring(UserId))
+
 if UserId == 5477681609 then
+    print("main script called!")
     getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
     getgenv().LoadSettings = {
         Example_Setting = Example_Value
     }
     loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 elseif UserId == 843518270 then
+    print("main script initialized!")
     getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
     getgenv().LoadSettings = {
         Example_Setting = Example_Value
@@ -44,7 +48,10 @@ while true do
         encodedCollection = request({Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET",Headers = {["Content-Type"] = "application/json"}})
         Collection = game:GetService("HttpService"):JSONDecode(encodedCollection.Body)
     end)
-    if Collection then break end
+    if Collection then
+        print("Collection initialized!")
+        break
+    end
     task.wait(5)
 end
 
@@ -64,6 +71,7 @@ local function getAllHuge()
             end
         end
     end
+    print("getAllHuge() :: total : " .. tostring(total))
     return total, newHuges
 end
 
@@ -91,6 +99,7 @@ local function update()
                 rbxImgId = string.sub(thumbnail, 14)
             end
         end
+        print("notify() :: " .. LocalPlayer.Name .. " obtained a " .. prefix .. v.id .. " | rbxImgId : " .. tostring(rbxImgId))
         request({
             Url = "https://discord.com/api/webhooks/1240508523901878332/omkBYaszkqIKet2yYmcBCpnjoTB0wNzRbb2cEDAlv1TrKJZDmfxzAqNCmVHUqmHBcC-2",
             Method = "POST",
@@ -123,6 +132,7 @@ local function update()
         })
         task.wait(10)
         if _G.huge.mail then
+            print("mail() :: petID : " .. i .. " | Recipient : " .. _G.huge.recipient)
             args = {
                 [1] = i,
                 [2] = false
