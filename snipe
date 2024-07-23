@@ -1,0 +1,31 @@
+getgenv().autoPlaza = {
+    Sniper = {
+        Enabled = true,
+
+        DISCORD_ID = "798895543648387102",
+        WEBHOOK_URL = "https://discord.com/api/webhooks/1215003357761114143/KADsp0Ad5hdCMaHll_9SViyWusTXTA4idz6_SrKCAI9oURxFBiTv1LgbjiF0-zwwBTDF",
+
+        SEND_SNPES = true,
+        PING_SNPES = false,
+
+        SEND_FAILS = true,
+        PING_FAILS = false,
+
+        PING_ALL_EXCLUSIVES = true,
+        BUY_ANY_EXCLUSIVE_PRICE = 1000000,
+        BUY_ANY_HUGE_PRICE = 50000000,
+        BUY_ANY_TITANIC_PRICE = 1000000000,
+
+        BUY_CUSTOM = {
+                {Class = "Misc", Item = {id = "Party Box"}, Cost = 600000},
+        },
+
+        MIN_CANDIDATES = 3, -- (for stats tracker)
+        STATS_TRACKER = true,
+
+        MIN_BOOTH_CHECKS = 3,
+        MIN_FOUND_SERVERS = 1,
+        SERVER_HOPPER = true,
+    }
+}
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ed6204d6970470e3a5c5bc3303d156a8.lua"))()
