@@ -1,4 +1,4 @@
-task.wait(15)
+task.wait(30)
 
 _G.teleportToBestArea = false
 _G.huge = {
@@ -19,8 +19,6 @@ if _G.teleportToBestArea then
     end
     task.wait(5)
 end
-
-task.wait(5)
 
 if UserId == 5477681609 then
     getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
