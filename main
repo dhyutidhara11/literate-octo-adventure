@@ -36,124 +36,179 @@ elseif UserId == 843518270 then
         Example_Setting = Example_Value
     }
     loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+elseif UserId == 2596671928 then
+    print("main script initialized!")
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        disable_globalhatch = false,
+        disable_kickshutdown = false,
+        loadFromEnv = false,
+        ignoreSave = false,
+        uniqueSaves = true
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+elseif UserId == 3099195591 then
+    getgenv().autoPlaza = {
+        Sniper = {
+            Enabled = true,
+    
+            DISCORD_ID = "798895543648387102",
+            WEBHOOK_URL = "https://discord.com/api/webhooks/1215003357761114143/KADsp0Ad5hdCMaHll_9SViyWusTXTA4idz6_SrKCAI9oURxFBiTv1LgbjiF0-zwwBTDF",
+    
+            SEND_SNPES = true,
+            PING_SNPES = false,
+    
+            SEND_FAILS = true,
+            PING_FAILS = false,
+    
+            PING_ALL_EXCLUSIVES = true,
+            BUY_ANY_EXCLUSIVE_PRICE = 1000000,
+            BUY_ANY_HUGE_PRICE = 50000000,
+            BUY_ANY_TITANIC_PRICE = 1000000000,
+    
+            BUY_CUSTOM = {
+                {Class = "Misc", Item = {id = "Mini Chest"}, Cost = 30000},
+                {Class = "Misc", Item = {id = "Bucket O' Magic"}, Cost = 100000},
+                {Class = "Misc", Item = {id = "Magic Shard"}, Cost = 80000},
+                {Class = "Misc", Item = {id = "Secret Key Upper Half"}, Cost = 5000},
+                {Class = "Misc", Item = {id = "Tech Key Upper Half"}, Cost = 5000},
+                {Class = "Misc", Item = {id = "Crystal Key Upper Half"}, Cost = 5000},
+                {Class = "Misc", Item = {id = "Void Key Upper Half"}, Cost = 10000},
+                {Class = "Misc", Item = {id = "Hot Cocoa"}, Cost = 5000},
+                {Class = "Misc", Item = {id = "Christmas Cookie"}, Cost = 30000},
+                {Class = "Fruit", Item = {id = "Candycane"}, Cost = 7500},
+                {Class = "Misc", Item = {id = "Seed Bag"}, Cost = 4000},
+            },
+    
+            MIN_CANDIDATES = 3, -- (for stats tracker)
+            STATS_TRACKER = true,
+    
+            MIN_BOOTH_CHECKS = 3,
+            MIN_FOUND_SERVERS = 1,
+            SERVER_HOPPER = true,
+        }
+    }
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ed6204d6970470e3a5c5bc3303d156a8.lua"))()
 else
     print("Who tf are you?")
 end
 
 task.wait(120)
 
-local encodedCollection, Collection
-while true do
-    pcall(function()
-        encodedCollection = request({Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET",Headers = {["Content-Type"] = "application/json"}})
-        Collection = game:GetService("HttpService"):JSONDecode(encodedCollection.Body)
-    end)
-    if Collection then
-        print("Collection initialized!")
-        break
-    end
-    task.wait(5)
-end
-
-local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
-
-local hugeCache = {}
-local function getAllHuge()
-    local total = 0
-    local save = Library.Save.Get().Inventory
-    local newHuges = {}
-    for i, v in pairs(save.Pet) do
-        if string.find(v.id, "Huge") then
-            total = total + 1
-            if not hugeCache[i] then
-                hugeCache[i] = v
-                newHuges[i] = v
-            end
-        end
-    end
-    print("getAllHuge() :: total : " .. tostring(total))
-    return total, newHuges
-end
-
--- local startingHuge = getAllHuge()
-
-local function update()
-    local currentHuge, newHuges = getAllHuge()
-    local args
-
-    for i, v in newHuges do
-        local rbxImgId = ""
-        local prefix = ""
-        if v.sh then
-            prefix = "Shiny "
-        end
-        if v.pt == 1 then
-            prefix = prefix .. "Golden "
-        elseif v.pt == 2 then
-            prefix = prefix .. "Rainbow "
-        end
-        for ii, vv in Collection.data do
-            if vv.configName == v.id then
-                local thumbnail = vv.configData.thumbnail
-                if v.pt == 1 then thumbnail = vv.configData.goldenThumbnail end
-                rbxImgId = string.sub(thumbnail, 14)
-            end
-        end
-        print("notify() :: " .. LocalPlayer.Name .. " obtained a " .. prefix .. v.id .. " | rbxImgId : " .. tostring(rbxImgId))
-        request({
-            Url = "https://discord.com/api/webhooks/1240508523901878332/omkBYaszkqIKet2yYmcBCpnjoTB0wNzRbb2cEDAlv1TrKJZDmfxzAqNCmVHUqmHBcC-2",
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = HttpService:JSONEncode({
-                content = "",
-                tts = false,
-                embeds = {
-                    {
-                        id = 652627557,
-                        title = "Huge hatched!",
-                        description = "**" .. LocalPlayer.Name .. "** obtained a **" .. prefix .. v.id .. "**",
-                        color = 393165,
-                        fields = {},
-                        thumbnail = {
-                            url = "https://biggamesapi.io/image/" .. rbxImgId
-                        },
-                        author = {
-                            icon_url = "https://www.biggames.io/favicon-32x32.png",
-                            name = "BIG Games",
-                            url = "https://www.biggames.io/"
-                        }
-                    }
-                },
-                components = {},
-                actions = {}
-            })
-        })
-        task.wait(10)
-        if _G.huge.mail then
-            print("mail() :: petID : " .. i .. " | Recipient : " .. _G.huge.recipient)
-            args = {
-                [1] = i,
-                [2] = false
-            }
-            game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(unpack(args))
-            task.wait(10)
-            repeat
-                local success = Library.Network.Invoke("Mailbox: Send", _G.huge.recipient, prefix .. "Huge", "Pet", i, 1)
-                task.wait(10)
-            until success
-            task.wait(10)
-        end
-    end
-end
-
-spawn(function()
-    while _G.huge.notify do
-        task.wait(60)
+if UserId == 5477681609 or UserId == 843518270 then
+    local encodedCollection, Collection
+    while true do
         pcall(function()
-            update()
+            encodedCollection = request({Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET",Headers = {["Content-Type"] = "application/json"}})
+            Collection = game:GetService("HttpService"):JSONDecode(encodedCollection.Body)
         end)
-        task.wait(60)
+        if Collection then
+            print("Collection initialized!")
+            break
+        end
+        task.wait(5)
     end
-end)
+
+    local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
+
+    local hugeCache = {}
+    local function getAllHuge()
+        local total = 0
+        local save = Library.Save.Get().Inventory
+        local newHuges = {}
+        for i, v in pairs(save.Pet) do
+            if string.find(v.id, "Huge") then
+                total = total + 1
+                if not hugeCache[i] then
+                    hugeCache[i] = v
+                    newHuges[i] = v
+                end
+            end
+        end
+        print("getAllHuge() :: total : " .. tostring(total))
+        return total, newHuges
+    end
+
+    -- local startingHuge = getAllHuge()
+
+    local function update()
+        local currentHuge, newHuges = getAllHuge()
+        local args
+
+        for i, v in newHuges do
+            local rbxImgId = ""
+            local prefix = ""
+            if v.sh then
+                prefix = "Shiny "
+            end
+            if v.pt == 1 then
+                prefix = prefix .. "Golden "
+            elseif v.pt == 2 then
+                prefix = prefix .. "Rainbow "
+            end
+            for ii, vv in Collection.data do
+                if vv.configName == v.id then
+                    local thumbnail = vv.configData.thumbnail
+                    if v.pt == 1 then thumbnail = vv.configData.goldenThumbnail end
+                    rbxImgId = string.sub(thumbnail, 14)
+                end
+            end
+            print("notify() :: " .. LocalPlayer.Name .. " obtained a " .. prefix .. v.id .. " | rbxImgId : " .. tostring(rbxImgId))
+            request({
+                Url = "https://discord.com/api/webhooks/1240508523901878332/omkBYaszkqIKet2yYmcBCpnjoTB0wNzRbb2cEDAlv1TrKJZDmfxzAqNCmVHUqmHBcC-2",
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = HttpService:JSONEncode({
+                    content = "",
+                    tts = false,
+                    embeds = {
+                        {
+                            id = 652627557,
+                            title = "Huge hatched!",
+                            description = "**" .. LocalPlayer.Name .. "** obtained a **" .. prefix .. v.id .. "**",
+                            color = 393165,
+                            fields = {},
+                            thumbnail = {
+                                url = "https://biggamesapi.io/image/" .. rbxImgId
+                            },
+                            author = {
+                                icon_url = "https://www.biggames.io/favicon-32x32.png",
+                                name = "BIG Games",
+                                url = "https://www.biggames.io/"
+                            }
+                        }
+                    },
+                    components = {},
+                    actions = {}
+                })
+            })
+            task.wait(10)
+            if _G.huge.mail then
+                print("mail() :: petID : " .. i .. " | Recipient : " .. _G.huge.recipient)
+                args = {
+                    [1] = i,
+                    [2] = false
+                }
+                game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(unpack(args))
+                task.wait(10)
+                repeat
+                    local success = Library.Network.Invoke("Mailbox: Send", _G.huge.recipient, prefix .. "Huge", "Pet", i, 1)
+                    task.wait(10)
+                until success
+                task.wait(10)
+            end
+        end
+    end
+
+    spawn(function()
+        while _G.huge.notify do
+            task.wait(60)
+            pcall(function()
+                update()
+            end)
+            task.wait(60)
+        end
+    end)
+end
