@@ -28,7 +28,7 @@ getgenv().autoPlaza = {
         BUY_ANY_TITANIC_PRICE = 1000000000,
 
         BUY_CUSTOM = {
-            {Class = "Misc", Item = {id = "Mini Chest"}, Cost = 30000},
+            {Class = "Misc", Item = {id = "Mini Chest"}, Cost = 40000},
             {Class = "Misc", Item = {id = "Seed Bag"}, Cost = 4000},
         },
 
