@@ -250,81 +250,42 @@ local function buyGardenMerchant()
 
     for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui._MACHINES.Merchant.Frame.ItemsFrame.Items:GetChildren()) do
         if not v.Name:find("Slot") then continue end
-        if merchantXP == 80000 then
-            local cost = v.Buy.Cost.Amount.Text
-            cost = cost:gsub(",", "")
-            cost = tonumber(cost)
-
-            local moneymouth = 0
-            for i, v in pairs(save.Get().Inventory.Currency) do
-                if v.id == 'Diamonds' then
-                    moneymouth = v._am
-                end
+        local moneymouth = 0
+        for i, v in pairs(save.Get().Inventory.Currency) do
+            if v.id == 'Diamonds' then
+                moneymouth = v._am
             end
-            if table.find(images, v.ITEM.ItemSlot.Icon.Image) and not v.Locked.Visible and not v.Buy:FindFirstChild("GreyGradient") and moneymouth >= cost then
+        end
+        local cost = v.Buy.Cost.Amount.Text
+        cost = cost:gsub(",", "")
+
+        cost = tonumber(cost)
+
+        if not v.Locked.Visible and not v.Buy:FindFirstChild("GreyGradient") and moneymouth >= cost then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 17, 2059)
+            wait(1)
+            local num = v.Name:gsub("Slot", "")
+
+            num = tonumber(num)
+
+
+            repeat
+                if doingGarden then break end
                 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 17, 2059)
-                wait(1)
 
-                local num = v.Name:gsub("Slot", "")
-
-                num = tonumber(num)
-
-
-                repeat
-                    if doingGarden then break end
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 17, 2059)
-                    game:GetService("ReplicatedStorage").Network.Merchant_RequestPurchase:InvokeServer(
-                        "GardenMerchant",
-                        num)
-                    if v.ITEM.ItemSlot.Icon.Image == "rbxassetid://15554896030" then
-                        seedsBought = seedsBought + 1
-                    end
-                    task.wait(1)
-                    for i, v in pairs(save.Get().Inventory.Currency) do
-                        if v.id == 'Diamonds' then
-                            moneymouth = v._am
-                        end
-                    end
-                until v.Locked.Visible or v.Buy:FindFirstChild("GreyGradient") or moneymouth < cost
-            end
-        else
-            local moneymouth = 0
-            for i, v in pairs(save.Get().Inventory.Currency) do
-                if v.id == 'Diamonds' then
-                    moneymouth = v._am
+                game:GetService("ReplicatedStorage").Network.Merchant_RequestPurchase:InvokeServer(
+                    "GardenMerchant",
+                    num)
+                if v.ITEM.ItemSlot.Icon.Image == "rbxassetid://15554896030" then
+                    seedsBought = seedsBought + 1
                 end
-            end
-            local cost = v.Buy.Cost.Amount.Text
-            cost = cost:gsub(",", "")
-
-            cost = tonumber(cost)
-
-            if not v.Locked.Visible and not v.Buy:FindFirstChild("GreyGradient") and moneymouth >= cost then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 17, 2059)
-                wait(1)
-                local num = v.Name:gsub("Slot", "")
-
-                num = tonumber(num)
-
-
-                repeat
-                    if doingGarden then break end
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(259, 17, 2059)
-
-                    game:GetService("ReplicatedStorage").Network.Merchant_RequestPurchase:InvokeServer(
-                        "GardenMerchant",
-                        num)
-                    if v.ITEM.ItemSlot.Icon.Image == "rbxassetid://15554896030" then
-                        seedsBought = seedsBought + 1
+                task.wait(1)
+                for i, v in pairs(save.Get().Inventory.Currency) do
+                    if v.id == 'Diamonds' then
+                        moneymouth = v._am
                     end
-                    task.wait(1)
-                    for i, v in pairs(save.Get().Inventory.Currency) do
-                        if v.id == 'Diamonds' then
-                            moneymouth = v._am
-                        end
-                    end
-                until v.Locked.Visible or v.Buy:FindFirstChild("GreyGradient") or moneymouth < cost
-            end
+                end
+            until v.Locked.Visible or v.Buy:FindFirstChild("GreyGradient") or moneymouth < cost
         end
     end
 
