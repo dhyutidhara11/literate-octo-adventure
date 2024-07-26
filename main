@@ -23,30 +23,51 @@ end
 print("UserId : " .. tostring(UserId))
 
 if UserId == 5477681609 then
-    print("main script called!")
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        Example_Setting = Example_Value
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
+
+    _G.GPROGRESS_MODE = "Hatch"
+
+    _G.GZONE_TO = 999
+    _G.GHATCH_SPEED_MS = 1250
+
+    _G.GGFX_MODE = 1
+
+    _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
+
+    _G.GHOLD_GIFTS = true
+    _G.GHOLD_BUNDLES = true
+
+    _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
+    _G.GPOTIONS_MAX_TIER = 10
+    _G.GENCHANTS = {}
+
+    _G.GCOLLECT_VENDING_MACHINES = false
+    _G.GCOLLECT_FREE_ITEMS = false
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
 elseif UserId == 843518270 then
-    print("main script initialized!")
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        Example_Setting = Example_Value
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-elseif UserId == 2596671928 then
-    print("main script initialized!")
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        disable_globalhatch = false,
-        disable_kickshutdown = false,
-        loadFromEnv = false,
-        ignoreSave = false,
-        uniqueSaves = true
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
+
+    _G.GPROGRESS_MODE = "Hatch"
+
+    _G.GZONE_TO = 999
+    _G.GHATCH_SPEED_MS = 1250
+
+    _G.GGFX_MODE = 1
+
+    _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
+
+    _G.GHOLD_GIFTS = true
+    _G.GHOLD_BUNDLES = true
+
+    _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
+    _G.GPOTIONS_MAX_TIER = 10
+    _G.GENCHANTS = {}
+
+    _G.GCOLLECT_VENDING_MACHINES = false
+    _G.GCOLLECT_FREE_ITEMS = false
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
 else
     print("Who tf are you?")
 end
