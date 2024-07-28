@@ -2,6 +2,7 @@ task.wait(30)
 
 _G.teleportToBestArea = false
 _G.huge = {
+    status = false,
     notify = true,
     mail = true,
     recipient = "LoneByte",
@@ -11,7 +12,6 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local UserId = LocalPlayer.UserId
-local useCustomHugeHatchNotifier = false
 
 if _G.teleportToBestArea then
     task.wait(5)
@@ -51,7 +51,7 @@ if UserId == 5477681609 then -- AK
 
     -- loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
 
-    useCustomHugeHatchNotifier = true
+    _G.huge.status = true
     getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
     getgenv().LoadSettings = {
         disable_globalhatch = false,
@@ -61,41 +61,51 @@ if UserId == 5477681609 then -- AK
         uniqueSaves = true
     }
     loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-
 elseif UserId == 843518270 then -- DB
-    script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
+    -- script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
 
-    _G.GPROGRESS_MODE = "Hatch"
+    -- _G.GPROGRESS_MODE = "Hatch"
 
-    _G.GZONE_TO = 999
-    _G.GHATCH_SPEED_MS = 1250
-    _G.GMAIL_RECEIVERS = {"LoneByte"}
+    -- _G.GZONE_TO = 999
+    -- _G.GHATCH_SPEED_MS = 1250
+    -- _G.GMAIL_RECEIVERS = {"LoneByte"}
 
-    _G.GGFX_MODE = 1
+    -- _G.GGFX_MODE = 1
 
-    _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
+    -- _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
 
-    _G.GHOLD_GIFTS = true
-    _G.GHOLD_BUNDLES = true
+    -- _G.GHOLD_GIFTS = true
+    -- _G.GHOLD_BUNDLES = true
 
-    _G.GWEBHOOK_USERID = "798895543648387102"
-    _G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1261215506103275540/COg9pe39KVQDeBvqNV6ec-0kMqnuY6e9x7KWbBJ2BWpCU-4MwS-YTyP2FUVRxOiS-ujJ"
+    -- _G.GWEBHOOK_USERID = "798895543648387102"
+    -- _G.GWEBHOOK_LINK = "https://discord.com/api/webhooks/1261215506103275540/COg9pe39KVQDeBvqNV6ec-0kMqnuY6e9x7KWbBJ2BWpCU-4MwS-YTyP2FUVRxOiS-ujJ"
 
-    _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
-    _G.GPOTIONS_MAX_TIER = 10
-    _G.GENCHANTS = {}
+    -- _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
+    -- _G.GPOTIONS_MAX_TIER = 10
+    -- _G.GENCHANTS = {}
 
-    _G.GCOLLECT_VENDING_MACHINES = false
-    _G.GCOLLECT_FREE_ITEMS = false
+    -- _G.GCOLLECT_VENDING_MACHINES = false
+    -- _G.GCOLLECT_FREE_ITEMS = false
 
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
+    -- loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
+
+    _G.huge.status = true
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        disable_globalhatch = false,
+        disable_kickshutdown = false,
+        loadFromEnv = false,
+        ignoreSave = false,
+        uniqueSaves = true
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 else
     print("Who tf are you?")
 end
 
 task.wait(120)
 
-if useCustomHugeHatchNotifier then
+if _G.huge.status then
     local encodedCollection, Collection
     while true do
         pcall(function()
@@ -129,7 +139,7 @@ if useCustomHugeHatchNotifier then
         return total, newHuges
     end
 
-    -- local startingHuge = getAllHuge()
+    local startingHuge = getAllHuge()
 
     local function update()
         local currentHuge, newHuges = getAllHuge()
