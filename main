@@ -1,3 +1,4 @@
+--[[
 task.wait(30)
 
 _G.teleportToBestArea = false
@@ -222,3 +223,4 @@ if _G.huge.status then
         end
     end)
 end
+]]
