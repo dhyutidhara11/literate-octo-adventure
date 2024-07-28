@@ -221,16 +221,6 @@ local function ClickButton(btn)
     end
 end
 
-function claimMapGifts()
-    pcall(function()
-        for i, v in pairs(getupvalues(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game.Misc["Hidden Presents"]).GetActive)) do
-            for j, k in pairs(v) do
-                game:GetService("ReplicatedStorage").Network["Hidden Presents: Found"]:InvokeServer(j)
-            end
-        end
-    end)
-end
-
 local function buyGardenMerchant()
     task.spawn(function()
         while task.wait() do
@@ -242,9 +232,6 @@ local function buyGardenMerchant()
         end
     end)
     local oldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-    pcall(function()
-        claimMapGifts()
-    end)
 
     local merchantXP = save.Get().MerchantExperience['GardenMerchant']
 
