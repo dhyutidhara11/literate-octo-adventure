@@ -1,4 +1,8 @@
-task.wait(30)
+repeat task.wait(1) until game.PlaceId ~= nil
+repeat task.wait(1) until game:GetService("Players") and game:GetService("Players").LocalPlayer
+repeat task.wait(1) until not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("__INTRO")
+
+task.wait(15)
 
 _G.teleportToBestArea = false
 _G.huge = {
@@ -7,33 +11,76 @@ _G.huge = {
     mail = true,
     recipient = "LoneByte",
 }
-_G.CustomEggs_Hatch = {
-    status = false,
-    amount = 1
-}
+_G.CustomEggs_Hatch = false
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local UserId = LocalPlayer.UserId
 
-if _G.teleportToBestArea then
-    task.wait(5)
-    if game.PlaceId == 17503543197 then
-        game:GetService("ReplicatedStorage").Network.Teleports_RequestTeleport:InvokeServer("Hacker Mainframe")
-    end
-    task.wait(5)
+local Library = require(ReplicatedStorage.Library)
+local Save = require(ReplicatedStorage.Library.Client.Save)
+local LocalPlayer = Players.LocalPlayer
+
+--[[ UTILS ]]
+
+local function Info(name)
+    return saveMod.Get()[name]
 end
 
-print("UserId : " .. tostring(UserId))
+--[[ PLAYER SPECIFIC SCRIPTS ]]
 
+local UserId = LocalPlayer.UserId
 if UserId == 5477681609 then -- AK
+    -- User-specific configuration for Misc features
     _G.huge.status = true
-    _G.CustomEggs_Hatch = {
-        status = true,
-        amount = 99
-    }
+    _G.CustomEggs_Hatch = true
+
+    -- Skip Egg Animation
+    local eggOpeningFrontend = getsenv(LocalPlayer.PlayerScripts.Scripts.Game["Egg Opening Frontend"])
+    hookfunction(eggOpeningFrontend.PlayEggAnimation, function() return end)
+
+    -- Infinite Pet Speed
+    hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
+
+    -- Anti-AFK
+    LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+    LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+    local vi = Instance.new("VirtualInputManager")
+    spawn(function()
+        while true do wait()
+            wait(600)
+            vi:SendMouseButtonEvent(115, 0, 0, true, game, 1)
+            wait(0.1)
+            vi:SendMouseButtonEvent(115, 0, 0, false, game, 1)
+            wait(1)
+        end
+    end)
+
+    -- Auto Pickup
+    local autoOrbConnection = nil
+    local autoLootBagConnection = nil
+    for i, v in workspace.__THINGS.Orbs:GetChildren() do
+        Library.Network.Fire("Orbs: Collect",{tonumber(v.Name)})
+        Library.Network.Fire("Orbs_ClaimMultiple",{[1]={[1]=v.Name}})
+        task.wait()
+        v:Destroy()
+    end
+    for i, v in workspace.__THINGS.Lootbags:GetChildren() do
+        Library.Network.Fire("Lootbags_Claim",{v.Name})
+        task.wait()
+        v:Destroy()
+    end
+    autoOrbConnection = workspace.__THINGS.Orbs.ChildAdded:Connect(function(v)
+        Library.Network.Fire("Orbs: Collect",{tonumber(v.Name)})
+        Library.Network.Fire("Orbs_ClaimMultiple",{[1]={[1]=v.Name}})
+        task.wait()
+        v:Destroy()
+    end)
+    autoLootBagConnection = workspace.__THINGS.Lootbags.ChildAdded:Connect(function(v)
+        Library.Network.Fire("Lootbags_Claim",{v.Name})
+        task.wait()
+        v:Destroy()
+    end)
 elseif UserId == 843518270 then -- DB
     _G.huge.status = true
 
@@ -65,15 +112,16 @@ end
 
 task.wait(60)
 
-if _G.CustomEggs_Hatch.status then
-    local args
+if _G.CustomEggs_Hatch then
+    print("CustomEggs_Hatch :: true")
+    local args, EggSlotsPurchased = nil, Info("EggSlotsPurchased")
 
     local function find_nearest_egg()
         local nearest, nearest_distance = nil, math.huge
         if workspace.__THINGS:FindFirstChild("CustomEggs") then
             for _,v in workspace.__THINGS.CustomEggs:GetChildren() do
                 if not v:IsA("Model") then continue end
-                local dist = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.PrimaryPart.Position).Magnitude
+                local dist = (LocalPlayer.Character.HumanoidRootPart.Position - v.PrimaryPart.Position).Magnitude
                 if dist > nearest_distance then continue end
                 nearest = v.Name
                 nearest_distance = dist
@@ -85,11 +133,11 @@ if _G.CustomEggs_Hatch.status then
     -- TODO: Get max amount of eggs hatchable
 
     spawn(function()
-        while _G.CustomEggs_Hatch.status and task.wait() do
+        while _G.CustomEggs_Hatch and task.wait() do
             pcall(function()
                 args = {
                     [1] = find_nearest_egg(),
-                    [2] = _G.CustomEggs_Hatch.amount
+                    [2] = EggSlotsPurchased
                 }
                 ReplicatedStorage.Network.CustomEggs_Hatch:InvokeServer(unpack(args))
             end)
@@ -104,7 +152,7 @@ if _G.huge.status then
     while true do
         pcall(function()
             encodedCollection = request({Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET",Headers = {["Content-Type"] = "application/json"}})
-            Collection = game:GetService("HttpService"):JSONDecode(encodedCollection.Body)
+            Collection = HttpService:JSONDecode(encodedCollection.Body)
         end)
         if Collection then
             print("Collection initialized!")
@@ -113,14 +161,11 @@ if _G.huge.status then
         task.wait(5)
     end
 
-    local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
-
     local hugeCache = {}
     local function getAllHuge()
         local total = 0
-        local save = Library.Save.Get().Inventory
         local newHuges = {}
-        for i, v in pairs(save.Pet) do
+        for i, v in pairs(Info("Inventory")["Pet"]) do
             if string.find(v.id, "Huge") then
                 total = total + 1
                 if not hugeCache[i] then
@@ -195,7 +240,7 @@ if _G.huge.status then
                     [1] = i,
                     [2] = false
                 }
-                game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(unpack(args))
+                ReplicatedStorage.Network.Locking_SetLocked:InvokeServer(unpack(args))
                 task.wait(10)
                 repeat
                     local success = Library.Network.Invoke("Mailbox: Send", _G.huge.recipient, prefix .. "Huge", "Pet", i, 1)
