@@ -24,7 +24,7 @@ local LocalPlayer = Players.LocalPlayer
 --[[ UTILS ]]
 
 local function Info(name)
-    return saveMod.Get()[name]
+    return Save.Get()[name]
 end
 
 --[[ PLAYER SPECIFIC SCRIPTS ]]
