@@ -55,32 +55,6 @@ if UserId == 5477681609 then -- AK
             wait(1)
         end
     end)
-
-    -- Auto Pickup
-    local autoOrbConnection = nil
-    local autoLootBagConnection = nil
-    for i, v in workspace.__THINGS.Orbs:GetChildren() do
-        Library.Network.Fire("Orbs: Collect",{tonumber(v.Name)})
-        Library.Network.Fire("Orbs_ClaimMultiple",{[1]={[1]=v.Name}})
-        task.wait()
-        v:Destroy()
-    end
-    for i, v in workspace.__THINGS.Lootbags:GetChildren() do
-        Library.Network.Fire("Lootbags_Claim",{v.Name})
-        task.wait()
-        v:Destroy()
-    end
-    autoOrbConnection = workspace.__THINGS.Orbs.ChildAdded:Connect(function(v)
-        Library.Network.Fire("Orbs: Collect",{tonumber(v.Name)})
-        Library.Network.Fire("Orbs_ClaimMultiple",{[1]={[1]=v.Name}})
-        task.wait()
-        v:Destroy()
-    end)
-    autoLootBagConnection = workspace.__THINGS.Lootbags.ChildAdded:Connect(function(v)
-        Library.Network.Fire("Lootbags_Claim",{v.Name})
-        task.wait()
-        v:Destroy()
-    end)
 elseif UserId == 843518270 then -- DB
     _G.huge.status = true
 
