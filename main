@@ -33,31 +33,22 @@ local UserId = LocalPlayer.UserId
 if UserId == 5477681609 then -- AK
     -- User-specific configuration for Misc features
     _G.huge.status = true
-    _G.CustomEggs_Hatch = true
 
-    -- Skip Egg Animation
-    local eggOpeningFrontend = getsenv(LocalPlayer.PlayerScripts.Scripts.Game["Egg Opening Frontend"])
-    hookfunction(eggOpeningFrontend.PlayEggAnimation, function() return end)
-
-    -- Infinite Pet Speed
-    hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
-
-    -- Anti-AFK
-    LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-    LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-    local vi = Instance.new("VirtualInputManager")
-    spawn(function()
-        while true do wait()
-            wait(600)
-            vi:SendMouseButtonEvent(115, 0, 0, true, game, 1)
-            wait(0.1)
-            vi:SendMouseButtonEvent(115, 0, 0, false, game, 1)
-            wait(1)
-        end
-    end)
+    -- Main script
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        disable_globalhatch = true,
+        disable_kickshutdown = true,
+        loadFromEnv = false,
+        ignoreSave = false,
+        uniqueSaves = true
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 elseif UserId == 843518270 then -- DB
+    -- User-specific configuration for Misc features
     _G.huge.status = true
 
+    -- Main script
     script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
 
     _G.GPROGRESS_MODE = "Hatch"
@@ -84,9 +75,9 @@ else
     print("Who tf are you?")
 end
 
-task.wait(60)
-
 if _G.CustomEggs_Hatch then
+    task.wait(60)
+
     print("CustomEggs_Hatch :: true")
     local args, EggSlotsPurchased = nil, Info("EggSlotsPurchased")
 
@@ -119,9 +110,9 @@ if _G.CustomEggs_Hatch then
     end)
 end
 
-task.wait(60)
-
 if _G.huge.status then
+    task.wait(60)
+
     local encodedCollection, Collection
     while true do
         pcall(function()

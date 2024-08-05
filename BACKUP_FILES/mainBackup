@@ -51,6 +51,31 @@ if UserId == 5477681609 then -- AK
 
     -- loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
 
+    --===========================================================================================================================================================--
+
+    -- -- Skip Egg Animation
+    -- local eggOpeningFrontend = getsenv(LocalPlayer.PlayerScripts.Scripts.Game["Egg Opening Frontend"])
+    -- hookfunction(eggOpeningFrontend.PlayEggAnimation, function() return end)
+
+    -- -- Infinite Pet Speed
+    -- hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
+
+    -- -- Anti-AFK
+    -- LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+    -- LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+    -- local vi = Instance.new("VirtualInputManager")
+    -- spawn(function()
+    --     while true do wait()
+    --         wait(600)
+    --         vi:SendMouseButtonEvent(115, 0, 0, true, game, 1)
+    --         wait(0.1)
+    --         vi:SendMouseButtonEvent(115, 0, 0, false, game, 1)
+    --         wait(1)
+    --     end
+    -- end)
+
+    --===========================================================================================================================================================--
+
     _G.huge.status = true
     getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
     getgenv().LoadSettings = {
