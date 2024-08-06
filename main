@@ -58,7 +58,7 @@ local function HugeHatchWebhook(mail, recipient)
             print("Collection initialized!")
             break
         end
-        task.wait(5)
+        task.wait(10)
     end
 
     local hugeCache = {}
