@@ -4,20 +4,10 @@ repeat task.wait(1) until not game:GetService("Players").LocalPlayer.PlayerGui:F
 
 task.wait(15)
 
-_G.teleportToBestArea = false
-_G.huge = {
-    status = false,
-    notify = true,
-    mail = true,
-    recipient = "LoneByte",
-}
-_G.CustomEggs_Hatch = false
-
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 
-local Library = require(ReplicatedStorage.Library)
 local Save = require(ReplicatedStorage.Library.Client.Save)
 local LocalPlayer = Players.LocalPlayer
 
@@ -27,58 +17,7 @@ local function Info(name)
     return Save.Get()[name]
 end
 
---[[ PLAYER SPECIFIC SCRIPTS ]]
-
-local UserId = LocalPlayer.UserId
-if UserId == 5477681609 then -- AK
-    -- User-specific configuration for Misc features
-    _G.huge.status = true
-
-    -- Main script
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        disable_globalhatch = true,
-        disable_kickshutdown = true,
-        loadFromEnv = false,
-        ignoreSave = false,
-        uniqueSaves = true
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-elseif UserId == 843518270 then -- DB
-    -- User-specific configuration for Misc features
-    _G.huge.status = true
-
-    -- Main script
-    script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
-
-    _G.GPROGRESS_MODE = "Hatch"
-
-    _G.GZONE_TO = 999
-    _G.GHATCH_SPEED_MS = 1250
-
-    _G.GGFX_MODE = 1
-
-    _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
-
-    _G.GHOLD_GIFTS = true
-    _G.GHOLD_BUNDLES = true
-
-    _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
-    _G.GPOTIONS_MAX_TIER = 10
-    _G.GENCHANTS = {}
-
-    _G.GCOLLECT_VENDING_MACHINES = false
-    _G.GCOLLECT_FREE_ITEMS = false
-
-    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
-else
-    print("Who tf are you?")
-end
-
-if _G.CustomEggs_Hatch then
-    task.wait(60)
-
-    print("CustomEggs_Hatch :: true")
+local function CustomEggs_Hatch()
     local args, EggSlotsPurchased = nil, Info("EggSlotsPurchased")
 
     local function find_nearest_egg()
@@ -95,10 +34,8 @@ if _G.CustomEggs_Hatch then
         return nearest
     end
 
-    -- TODO: Get max amount of eggs hatchable
-
     spawn(function()
-        while _G.CustomEggs_Hatch and task.wait() do
+        while task.wait() do
             pcall(function()
                 args = {
                     [1] = find_nearest_egg(),
@@ -110,9 +47,7 @@ if _G.CustomEggs_Hatch then
     end)
 end
 
-if _G.huge.status then
-    task.wait(60)
-
+local function HugeHatchWebhook(mail, recipient)
     local encodedCollection, Collection
     while true do
         pcall(function()
@@ -199,8 +134,8 @@ if _G.huge.status then
                 })
             })
             task.wait(10)
-            if _G.huge.mail then
-                print("mail() :: petID : " .. i .. " | Recipient : " .. _G.huge.recipient)
+            if mail then
+                print("mail() :: petID : " .. i .. " | Recipient : " .. recipient)
                 args = {
                     [1] = i,
                     [2] = false
@@ -208,7 +143,14 @@ if _G.huge.status then
                 ReplicatedStorage.Network.Locking_SetLocked:InvokeServer(unpack(args))
                 task.wait(10)
                 repeat
-                    local success = Library.Network.Invoke("Mailbox: Send", _G.huge.recipient, prefix .. "Huge", "Pet", i, 1)
+                    args = {
+                        [1] = recipient,
+                        [2] = prefix .. "Huge",
+                        [3] = "Pet",
+                        [4] = i,
+                        [5] = 1
+                    }
+                    local success = ReplicatedStorage.Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
                     task.wait(10)
                 until success
                 task.wait(10)
@@ -217,12 +159,62 @@ if _G.huge.status then
     end
 
     spawn(function()
-        while _G.huge.notify do
-            task.wait(60)
+        while task.wait(60) do
             pcall(function()
                 update()
             end)
-            task.wait(60)
         end
     end)
+end
+
+--[[ PLAYER SPECIFIC SCRIPTS ]]
+
+local UserId = LocalPlayer.UserId
+if UserId == 5477681609 then -- AK
+    -- User-specific configuration for Misc features
+    HugeHatchWebhook(true, "LoneByte")
+
+    task.wait(60)
+
+    -- Main script
+    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
+    getgenv().LoadSettings = {
+        disable_globalhatch = true,
+        disable_kickshutdown = true,
+        loadFromEnv = false,
+        ignoreSave = false,
+        uniqueSaves = true
+    }
+    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+elseif UserId == 843518270 then -- DB
+    -- User-specific configuration for Misc features
+    HugeHatchWebhook(true, "LoneByte")
+
+    task.wait(60)
+
+    -- Main script
+    script_key = "wYYrHLJpGClFBKsqwgsSNSLwkHzpePnW";
+
+    _G.GPROGRESS_MODE = "Hatch"
+
+    _G.GZONE_TO = 999
+    _G.GHATCH_SPEED_MS = 1250
+
+    _G.GGFX_MODE = 1
+
+    _G.GFRUITS = {"Apple","Banana","Orange","Pineapple","Watermelon","Rainbow"}
+
+    _G.GHOLD_GIFTS = true
+    _G.GHOLD_BUNDLES = true
+
+    _G.GPOTIONS = {"Damage","Coins","Lucky","Treasure Hunter","Diamonds","Walkspeed","The Cocktail","Huge"}
+    _G.GPOTIONS_MAX_TIER = 10
+    _G.GENCHANTS = {}
+
+    _G.GCOLLECT_VENDING_MACHINES = false
+    _G.GCOLLECT_FREE_ITEMS = false
+
+    loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
+else
+    print("Who tf are you?")
 end
