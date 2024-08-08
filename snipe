@@ -1,7 +1,7 @@
 getgenv().settings = {
     {
         item = "Secret Key",
-        maxPrice = 22000,
+        maxPrice = 23000,
         class = "Misc"
     }
 }
