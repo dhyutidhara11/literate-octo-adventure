@@ -1,43 +1,9 @@
---[[
-            {Class = "Misc", Item = {id = "Bucket O' Magic"}, Cost = 100000},
-            {Class = "Misc", Item = {id = "Magic Shard"}, Cost = 80000},
-            {Class = "Misc", Item = {id = "Secret Key Upper Half"}, Cost = 5000},
-            {Class = "Misc", Item = {id = "Tech Key Upper Half"}, Cost = 5000},
-            {Class = "Misc", Item = {id = "Crystal Key Upper Half"}, Cost = 5000},
-            {Class = "Misc", Item = {id = "Void Key Upper Half"}, Cost = 10000},
-            {Class = "Misc", Item = {id = "Hot Cocoa"}, Cost = 5000},
-            {Class = "Misc", Item = {id = "Christmas Cookie"}, Cost = 30000},
-            {Class = "Fruit", Item = {id = "Candycane"}, Cost = 7500},
-]]
-getgenv().autoPlaza = {
-    Sniper = {
-        Enabled = true,
-
-        DISCORD_ID = "798895543648387102",
-        WEBHOOK_URL = "https://discord.com/api/webhooks/1215003357761114143/KADsp0Ad5hdCMaHll_9SViyWusTXTA4idz6_SrKCAI9oURxFBiTv1LgbjiF0-zwwBTDF",
-
-        SEND_SNPES = true,
-        PING_SNPES = false,
-
-        SEND_FAILS = true,
-        PING_FAILS = false,
-
-        PING_ALL_EXCLUSIVES = true,
-        BUY_ANY_EXCLUSIVE_PRICE = 1000000,
-        BUY_ANY_HUGE_PRICE = 50000000,
-        BUY_ANY_TITANIC_PRICE = 1000000000,
-
-        BUY_CUSTOM = {
-            {Class = "Misc", Item = {id = "Mini Chest"}, Cost = 40000},
-            {Class = "Misc", Item = {id = "Seed Bag"}, Cost = 4000},
-        },
-
-        MIN_CANDIDATES = 3, -- (for stats tracker)
-        STATS_TRACKER = true,
-
-        MIN_BOOTH_CHECKS = 3,
-        MIN_FOUND_SERVERS = 1,
-        SERVER_HOPPER = true,
+getgenv().settings = {
+    {
+        item = "Secret Key",
+        maxPrice = 22000,
+        class = "Misc"
     }
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ed6204d6970470e3a5c5bc3303d156a8.lua"))()
+repeat task.wait() until game:IsLoaded()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/l0nebyte/temp/main/main"))()
