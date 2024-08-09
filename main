@@ -179,15 +179,7 @@ if UserId == 5477681609 then -- AK
     task.wait(60)
 
     -- Main script
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        disable_globalhatch = true,
-        disable_kickshutdown = true,
-        loadFromEnv = false,
-        ignoreSave = false,
-        uniqueSaves = true
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    
 elseif UserId == 843518270 then -- DB
     -- User-specific configuration for Misc features
     HugeHatchWebhook(true, "LoneByte")
@@ -195,15 +187,7 @@ elseif UserId == 843518270 then -- DB
     task.wait(60)
 
     -- Main script
-    getgenv().AuthKey = "HUGE_i2nJpVqbawdA"
-    getgenv().LoadSettings = {
-        disable_globalhatch = true,
-        disable_kickshutdown = true,
-        loadFromEnv = false,
-        ignoreSave = false,
-        uniqueSaves = true
-    }
-    loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+    
 else
     print("Who tf are you?")
 end
