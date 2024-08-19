@@ -1,0 +1,781 @@
+repeat task.wait() until game:IsLoaded()
+repeat task.wait() until game.PlaceId ~= nil
+repeat task.wait() until not game.Players.LocalPlayer.PlayerGui:FindFirstChild("__INTRO")
+repeat task.wait() until game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+if game.PlaceId == 8737899170 or game.PlaceId == 16498369169 then
+    local map = game:GetService("Workspace"):FindFirstChild('Map') or game:GetService("Workspace"):FindFirstChild('Map2')
+    repeat
+        task.wait()
+        print("waiting")
+    until #map:GetChildren() >= 25
+elseif game.PlaceId == 15502339080 then
+    repeat task.wait() until game:GetService("Workspace").__THINGS and game:GetService("Workspace").__DEBRIS
+end
+
+print("Loaded")
+
+wait(3)
+
+-- shit as FUCK
+local req = game:HttpGet('https://raw.githubusercontent.com/Hola-py-thon/Hola-py/main/Let')
+loadstring(req)()
+if not getgenv().skibidi then
+    error("")
+end
+
+wait(3)
+
+local roll = true
+
+--#region ui
+function removeTextures()
+    -- floods console
+    --[[if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("Parallel Pet Actors") then
+        game.Players.LocalPlayer.PlayerScripts:FindFirstChild("Parallel Pet Actors"):Destroy()
+    end]]
+
+    pcall(function()
+        for i, v in next, workspace:GetDescendants() do
+            if v:IsA("MeshPart") then
+                v.TextureID = ""
+                v.MeshId = ""
+            end
+
+            if v:IsA("SurfaceAppearance") then
+                v:Destroy()
+            end
+        end
+
+        wait(1)
+
+        Lighting = game:GetService("Lighting")
+        local Terrain = workspace:FindFirstChildOfClass('Terrain')
+        Terrain.WaterWaveSize = 0
+        Terrain.WaterWaveSpeed = 0
+        Terrain.WaterReflectance = 0
+        Terrain.WaterTransparency = 0
+        Lighting.GlobalShadows = false
+        Lighting.FogEnd = 9e9
+        for i, v in pairs(game:GetDescendants()) do
+            if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+                v.Material = "Plastic"
+                v.Reflectance = 0
+            elseif v:IsA("Decal") then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Explosion") then
+                v.BlastPressure = 1
+                v.BlastRadius = 1
+            end
+        end
+        wait(1)
+
+        for i, v in pairs(Lighting:GetDescendants()) do
+            if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+                v.Enabled = false
+            end
+        end
+
+        wait(1)
+        workspace.DescendantAdded:Connect(function(child)
+            task.spawn(function()
+                if child:IsA('ForceField') then
+                    game:GetService("RunService").Heartbeat:Wait()
+                    child:Destroy()
+                elseif child:IsA('Sparkles') then
+                    game:GetService("RunService").Heartbeat:Wait()
+                    child:Destroy()
+                elseif child:IsA('Smoke') or child:IsA('Fire') then
+                    game:GetService("RunService").Heartbeat:Wait()
+                    child:Destroy()
+                end
+            end)
+        end)
+    end)
+end
+
+if autoRng.fpsBoost then
+    removeTextures()
+end
+
+pcall(function()
+    game:GetService("CoreGui").PlayerList.Enabled = false
+end)
+
+local G2L = {};
+if autoRng.hideScreen then
+    spawn(function()
+        game:GetService('RunService'):Set3dRenderingEnabled(false)
+
+        -- StarterGui.ScreenGui
+        G2L["1"] = Instance.new("ScreenGui", game.CoreGui);
+        G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+        G2L["1"]["IgnoreGuiInset"] = true;
+
+        -- StarterGui.ScreenGui.Frame
+        G2L["2"] = Instance.new("Frame", G2L["1"]);
+        G2L["2"]["BorderSizePixel"] = 0;
+        G2L["2"]["BackgroundColor3"] = Color3.fromRGB(51, 51, 51);
+        G2L["2"]["Size"] = UDim2.new(1, 0, 1, 0);
+        G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame
+        G2L["3"] = Instance.new("Frame", G2L["2"]);
+        G2L["3"]["BorderSizePixel"] = 0;
+        G2L["3"]["BackgroundColor3"] = Color3.fromRGB(41, 41, 41);
+        G2L["3"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+        G2L["3"]["Size"] = UDim2.new(0.5, 0, 0.699999988079071, 0);
+        G2L["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["3"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.rolls
+        G2L["4"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["4"]["TextWrapped"] = true;
+        G2L["4"]["BorderSizePixel"] = 0;
+        G2L["4"]["TextScaled"] = true;
+        G2L["4"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L["4"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["4"]["TextSize"] = 14;
+        G2L["4"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["4"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["4"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["4"]["Text"] = [[Rolls: 5]];
+        G2L["4"]["Name"] = [[rolls]];
+        G2L["4"]["BackgroundTransparency"] = 1;
+        G2L["4"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.huge
+        G2L["5"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["5"]["TextWrapped"] = true;
+        G2L["5"]["BorderSizePixel"] = 0;
+        G2L["5"]["TextScaled"] = true;
+        G2L["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L["5"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["5"]["TextSize"] = 14;
+        G2L["5"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["5"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["5"]["Text"] = [[Huge: 0]];
+        G2L["5"]["Name"] = [[huge]];
+        G2L["5"]["BackgroundTransparency"] = 1;
+        G2L["5"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.coin
+        G2L["6"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["6"]["TextWrapped"] = true;
+        G2L["6"]["BorderSizePixel"] = 0;
+        G2L["6"]["TextScaled"] = true;
+        G2L["6"]["BackgroundColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["6"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["6"]["TextSize"] = 14;
+        G2L["6"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["6"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["6"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["6"]["Text"] = [[Coin: 0]];
+        G2L["6"]["Name"] = [[coin]];
+        G2L["6"]["BackgroundTransparency"] = 1;
+        G2L["6"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.time
+        G2L["7"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["7"]["TextWrapped"] = true;
+        G2L["7"]["BorderSizePixel"] = 0;
+        G2L["7"]["TextScaled"] = true;
+        G2L["7"]["BackgroundColor3"] = Color3.fromRGB(255, 9, 13);
+        G2L["7"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["7"]["TextSize"] = 14;
+        G2L["7"]["TextColor3"] = Color3.fromRGB(241, 33, 36);
+        G2L["7"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["7"]["Text"] = [[Time: 59]];
+        G2L["7"]["Name"] = [[time]];
+        G2L["7"]["BackgroundTransparency"] = 1;
+        G2L["7"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.UIListLayout
+        G2L["8"] = Instance.new("UIListLayout", G2L["3"]);
+        G2L["8"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
+
+        -- StarterGui.ScreenGui.Frame.Frame.pc
+        G2L["9"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["9"]["TextWrapped"] = true;
+        G2L["9"]["BorderSizePixel"] = 0;
+        G2L["9"]["TextScaled"] = true;
+        G2L["9"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L["9"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["9"]["TextSize"] = 14;
+        G2L["9"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["9"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["9"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["9"]["Text"] = [[PC: ]];
+        G2L["9"]["Name"] = [[pc]];
+        G2L["9"]["BackgroundTransparency"] = 1;
+        G2L["9"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.name
+        G2L["a"] = Instance.new("TextLabel", G2L["3"]);
+        G2L["a"]["TextWrapped"] = true;
+        G2L["a"]["BorderSizePixel"] = 0;
+        G2L["a"]["TextScaled"] = true;
+        G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L["a"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L["a"]["TextSize"] = 14;
+        G2L["a"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L["a"]["Size"] = UDim2.new(1, 0, 0.15000000596046448, 0);
+        G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L["a"]["Text"] = [[Name: ]] .. game.Players.LocalPlayer.Name;
+        G2L["a"]["Name"] = [[name]];
+        G2L["a"]["BackgroundTransparency"] = 1;
+        G2L["a"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+
+        -- StarterGui.ScreenGui.Frame.Frame.UICorner
+        G2L["b"] = Instance.new("UICorner", G2L["3"]);
+
+
+        local G2L2 = {};
+
+        -- StarterGui.ScreenGui.Frame
+        G2L2["2"] = Instance.new("Frame", G2L["1"]);
+        G2L2["2"]["BorderSizePixel"] = 0;
+        G2L2["2"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L2["2"]["Size"] = UDim2.new(0.15000000596046448, 0, 0.20000000298023224, 0);
+        G2L2["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L2["2"]["Position"] = UDim2.new(0.10000000149011612, 0, 0.5, 0);
+        G2L2["2"].ZIndex = 999
+
+        -- StarterGui.ScreenGui.Frame.TextButton
+        G2L2["3"] = Instance.new("TextButton", G2L2["2"]);
+        G2L2["3"]["TextWrapped"] = true;
+        G2L2["3"]["BorderSizePixel"] = 0;
+        G2L2["3"]["TextScaled"] = true;
+        G2L2["3"]["BackgroundColor3"] = Color3.fromRGB(41, 41, 41);
+        G2L2["3"]["TextSize"] = 40;
+        G2L2["3"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L2["3"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L2["3"]["Size"] = UDim2.new(1, 0, 1, 0);
+        G2L2["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L2["3"]["Text"] = [[Toggle screen]];
+
+        -- StarterGui.ScreenGui.Frame.TextButton.UICorner
+        G2L2["4"] = Instance.new("UICorner", G2L2["3"]);
+
+
+        -- StarterGui.ScreenGui.Frame.UICorner
+        G2L2["5"] = Instance.new("UICorner", G2L2["2"]);
+
+        local G2L3 = {};
+
+        -- StarterGui.ScreenGui.Frame
+        G2L3["2"] = Instance.new("Frame", G2L["1"]);
+        G2L3["2"]["BorderSizePixel"] = 0;
+        G2L3["2"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+        G2L3["2"]["Size"] = UDim2.new(0.15000000596046448, 0, 0.20000000298023224, 0);
+        G2L3["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L3["2"]["Position"] = UDim2.new(0.10000000149011612, 0, 0.3, 0);
+        G2L3["2"].ZIndex = 999
+
+        G2L3["2"].Visible = false
+
+        -- StarterGui.ScreenGui.Frame.TextButton
+        G2L3["3"] = Instance.new("TextButton", G2L3["2"]);
+        G2L3["3"]["TextWrapped"] = true;
+        G2L3["3"]["BorderSizePixel"] = 0;
+        G2L3["3"]["TextScaled"] = true;
+        G2L3["3"]["BackgroundColor3"] = Color3.fromRGB(41, 41, 41);
+        G2L3["3"]["TextSize"] = 40;
+        G2L3["3"]["FontFace"] = Font.new([[rbxasset://fonts/families/FredokaOne.json]], Enum.FontWeight.Regular,
+            Enum.FontStyle.Normal);
+        G2L3["3"]["TextColor3"] = Color3.fromRGB(150, 75, 255);
+        G2L3["3"]["Size"] = UDim2.new(1, 0, 1, 0);
+        G2L3["3"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+        G2L3["3"]["Text"] = [[Copy Server]];
+
+        -- StarterGui.ScreenGui.Frame.TextButton.UICorner
+        G2L3["4"] = Instance.new("UICorner", G2L3["3"]);
+
+
+        -- StarterGui.ScreenGui.Frame.UICorner
+        G2L3["5"] = Instance.new("UICorner", G2L3["2"]);
+
+        G2L2["3"].Activated:Connect(function()
+            game:GetService('RunService'):Set3dRenderingEnabled(G2L["2"].Visible)
+            G2L["2"].Visible = not G2L["2"].Visible
+            G2L2["2"].ZIndex = 999
+        end)
+
+        G2L3["3"].Activated:Connect(function()
+            local copystr = 'game:GetService("TeleportService"):TeleportToPlaceInstance(' ..
+                tostring(game.PlaceId) .. ",'" .. tostring(game.JobId) .. "',game.Players.LocalPlayer)"
+            setclipboard(copystr)
+        end)
+    end)
+end
+local startTick = tick()
+
+
+--#endregion
+-- anti afk
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "B", false, game)
+    wait()
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, "B", false, game)
+end)
+
+function hasBoost(name)
+    -- game:GetService("Players").LocalPlayer.PlayerGui.Main.Boosts["Buffs_Lucky Dice II"]
+    local path = game:GetService("Players").LocalPlayer.PlayerGui.Main.Boosts:FindFirstChild("Buffs_" .. name) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Boosts:FindFirstChild(name)
+    if path and path.Visible then return true end
+
+    return false
+end
+
+--#region save
+local save = require(game:GetService("ReplicatedStorage").Library.Client.Save)
+
+function getItemId(name)
+    for i, v in next, save.Get().Inventory.Misc do
+        for k, l in v do
+            if k == "id" and l == name then
+                return i
+            end
+        end
+    end
+end
+
+function getItemAmt(id)
+    for i, v in next, save.Get().Inventory.Misc do
+        if i == id then
+            return v._am or 1
+        end
+    end
+    return 0
+end
+
+--#endregion
+
+function convertToNumber(value)
+    local suffixes = { k = 1e3, m = 1e6, b = 1e9 }
+    local number, suffix = value:match("([%d%.]+)(%a?)") -- The suffix part is now optional
+    number = tonumber(number)
+
+    if suffix and suffixes[suffix:lower()] then
+        return number * suffixes[suffix:lower()]
+    else
+        return number -- If no suffix, return the number itself
+    end
+end
+
+function getCoinAmt()
+    return convertToNumber(game:GetService("Players").LocalPlayer.PlayerGui.MainMobile.MobileCurrency.Bottom.RngCoins
+        ["RNG Coins"].Amount.Text)
+end
+
+function enterRNG()
+    repeat
+        task.wait(1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.__THINGS.Instances.RngInstance.Teleports
+            .Enter
+            .CFrame
+    until workspace.__THINGS.__INSTANCE_CONTAINER.Active:FindFirstChild("RngInstance")
+
+    wait(3)
+end
+
+local starterAmt = getItemAmt(getItemId("Lucky Dice"))
+
+local TeleportService = game:GetService("TeleportService")
+
+spawn(function()
+    wait(360)
+    if not (getItemAmt(getItemId("Lucky Dice")) > starterAmt) then
+        TeleportService:Teleport(game.PlaceId)
+    end
+end)
+
+local rollVal = 0
+local pointVal = 0
+local hugeNum = 0
+local titanNum = 0
+if autoRng.hideScreen then
+    spawn(function()
+        while task.wait(1) do
+            pcall(function()
+                G2L["7"].Text = "Time:  " .. math.floor(tick() - startTick)
+                G2L["6"].Text = "Coin: " .. (pointVal)
+                G2L["4"].Text = "Rolls: " .. tostring(rollVal)
+                G2L["5"].Text = "Huge: " .. tostring(hugeNum)
+                G2L["9"]["Text"] = [[PC: ]] .. getgenv().PC;
+            end)
+        end
+    end)
+end
+
+local hugeCache = {}
+local function getAllHuge()
+    local total = 0
+    local newHuges = {}
+    pcall(function()
+        for i, v in pairs(save.Get().Inventory.Pet) do
+            if string.find(v.id, "Huge") then
+                total = total + 1
+                if not hugeCache[i] then
+                    hugeCache[i] = v
+                    newHuges[i] = v
+                end
+            end
+        end
+    end)
+    return total, newHuges
+end
+
+spawn(function()
+    while wait(1) do
+        pointVal = getCoinAmt()
+        rollVal = tonumber(save.Get().RngRolls)
+        hugeNum, fart = getAllHuge()
+    end
+end)
+
+function openMerchantUi()
+    local oldTick = tick()
+    repeat
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4084, 2570, -5417)
+        task.wait(3)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4088, 2570, -5408)
+    until game:GetService("Players").LocalPlayer.PlayerGui._MACHINES.Merchant.Enabled or tick() - oldTick >= 10
+
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(4084, 2570, -5417)
+end
+
+function upgrade(type)
+    game:GetService("ReplicatedStorage").Network.Rng_PurchaseUpgrade:InvokeServer("First", type)
+end
+
+function buyMerchant(num)
+    game:GetService("ReplicatedStorage").Network.Merchant_RequestPurchase:InvokeServer("LuckyDiceMerchant", num)
+end
+
+function craft(type)
+    game:GetService("ReplicatedStorage").Network.LuckyDice_Craft:InvokeServer(type, 1)
+end
+
+enterRNG()
+openMerchantUi()
+
+
+removeTextures()
+for k, v in workspace:GetDescendants() do
+    if v:IsA("BasePart") then
+        v.Transparency = 1
+    end
+end
+
+
+pcall(function()
+    setfpscap(5)
+end)
+
+
+spawn(function()
+    local HttpService = game:GetService("HttpService")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Players = game:GetService("Players")
+
+    local LocalPlayer = Players.LocalPlayer
+    local Save = require(ReplicatedStorage.Library.Client.Save)
+
+    local function Info(name)
+        return Save.Get()[name]
+    end
+
+    local encodedCollection, Collection
+    while true do
+        pcall(function()
+            encodedCollection = request({ Url = "https://biggamesapi.io/api/collection/Pets", Method = "GET", Headers = { ["Content-Type"] = "application/json" } })
+            Collection = HttpService:JSONDecode(encodedCollection.Body)
+        end)
+        if Collection then break end
+        task.wait(5)
+    end
+
+    local hugeCache = {}
+    local function getAllHuge()
+        local total = 0
+        local newHuges = {}
+        for i, v in pairs(Info("Inventory")["Pet"]) do
+            if string.find(v.id, "Huge") then
+                total = total + 1
+                if not hugeCache[i] then
+                    hugeCache[i] = v
+                    newHuges[i] = v
+                end
+            end
+        end
+        return total, newHuges
+    end
+
+    local startingHuge = getAllHuge()
+
+    local function update()
+        local currentHuge, newHuges = getAllHuge()
+        local args
+
+        for i, v in newHuges do
+            local rbxImgId = ""
+            local prefix = ""
+            if v.sh then
+                prefix = "Shiny "
+            end
+            if v.pt == 1 then
+                prefix = prefix .. "Golden "
+            elseif v.pt == 2 then
+                prefix = prefix .. "Rainbow "
+            end
+            for ii, vv in Collection.data do
+                if vv.configName == v.id then
+                    local thumbnail = vv.configData.thumbnail
+                    if v.pt == 1 then thumbnail = vv.configData.goldenThumbnail end
+                    rbxImgId = string.sub(thumbnail, 14)
+                end
+            end
+            request({
+                Url = autoRng.webhookUrl,
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json"
+                },
+                Body = HttpService:JSONEncode({
+                    content = "",
+                    tts = false,
+                    embeds = {
+                        {
+                            id = 652627557,
+                            title = "Huge hatched!",
+                            description = "**" .. LocalPlayer.Name .. "** obtained a **" .. prefix .. v.id .. "**",
+                            color = 393165,
+                            fields = {},
+                            thumbnail = {
+                                url = "https://biggamesapi.io/image/" .. rbxImgId
+                            },
+                            author = {
+                                icon_url = "https://www.biggames.io/favicon-32x32.png",
+                                name = "BIG Games",
+                                url = "https://www.biggames.io/"
+                            }
+                        }
+                    },
+                    components = {},
+                    actions = {}
+                })
+            })
+            task.wait(10)
+            if autoRng.autoMail then
+                args = {
+                    [1] = i,
+                    [2] = false
+                }
+                ReplicatedStorage.Network.Locking_SetLocked:InvokeServer(unpack(args))
+                task.wait(10)
+                repeat
+                    args = {
+                        [1] = autoRng.sendToUser,
+                        [2] = prefix .. "Huge",
+                        [3] = "Pet",
+                        [4] = i,
+                        [5] = 1
+                    }
+                    local success = ReplicatedStorage.Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(
+                        args))
+                    task.wait(10)
+                until success
+                task.wait(10)
+            end
+        end
+    end
+
+    spawn(function()
+        while task.wait(60) do
+            pcall(function()
+                update()
+            end)
+        end
+    end)
+
+end)
+
+
+--#region automation
+
+--combine
+if autoRng.autoCombine then
+    spawn(function()
+        while task.wait(0.5) do
+            if getItemAmt(getItemId("Lucky Dice")) >= 5 then
+                craft("Lucky Dice II")
+            end
+            if getItemAmt(getItemId("Lucky Dice III")) < 2 then
+                craft("Lucky Dice III")
+            end
+            if getItemAmt(getItemId("Mega Lucky Dice")) < 3 then
+                craft("Mega Lucky Dice")
+            else
+                craft("Mega Lucky Dice II")
+            end
+        end
+    end)
+end
+
+spawn(function()
+    while wait() do
+        local args = {
+            [1] = "Default"
+        }
+        game:GetService("ReplicatedStorage").Network:FindFirstChild("ForeverPacks: Claim Free"):InvokeServer(unpack(args))
+        wait(500)
+    end
+end)
+
+-- auto use
+if autoRng.autoUseDice then
+    spawn(function()
+        while wait(1) do
+            local ending = tostring(rollVal):sub(-1)
+            if tonumber(ending) == 9 or game:GetService("Players").LocalPlayer.PlayerGui._MISC.RngUI.Button.Roll.Bonus.Visible then
+                if getItemAmt(getItemId("Mega Lucky Dice II")) >= 1 then
+                    roll = false
+
+                    if getItemAmt(getItemId("Lucky Dice")) >= 1 then
+                        if autoRng.useIfNotActive and not hasBoost("Lucky Dice") then
+                            game:GetService("ReplicatedStorage").Network.LuckyDice_Consume:InvokeServer(1)
+                        elseif not autoRng.useIfNotActive then
+                            game:GetService("ReplicatedStorage").Network.LuckyDice_Consume:InvokeServer(1)
+                        end
+                    end
+
+                    if getItemAmt(getItemId("Lucky Dice II")) >= 1 then
+                        if autoRng.useIfNotActive and not hasBoost("Lucky Dice II") then
+                            game:GetService("ReplicatedStorage").Network.LuckyDiceII_Consume:InvokeServer(1)
+                        elseif not autoRng.useIfNotActive then
+                            game:GetService("ReplicatedStorage").Network.LuckyDiceII_Consume:InvokeServer(1)
+                        end
+                    end
+
+                    if getItemAmt(getItemId("Lucky Dice III")) >= 1 then
+                        if autoRng.useIfNotActive and not hasBoost("Lucky Dice III") then
+                            game:GetService("ReplicatedStorage").Network.LuckyDiceIII_Consume:InvokeServer(1)
+                        elseif not autoRng.useIfNotActive then
+                            game:GetService("ReplicatedStorage").Network.LuckyDiceIII_Consume:InvokeServer(1)
+                        end
+                    end
+
+                    wait(1)
+
+                    local args = {
+                        [1] = "Mega Lucky Dice II",
+                        [2] = 1
+                    }
+                    game:GetService("ReplicatedStorage").Network.LuckyDice_ConsumeMega:InvokeServer(unpack(args))
+
+                    roll = true
+                end
+            end
+
+            if not isfile(game.Players.LocalPlayer.Name .. "lastUsedMegaDice.txt") and getItemAmt(getItemId("Mega Lucky Dice")) >= 1 then
+                writefile(game.Players.LocalPlayer.Name .. "lastUsedMegaDice.txt", tostring(tick()))
+                local args = {
+                    [1] = "Mega Lucky Dice",
+                    [2] = 1
+                }
+                game:GetService("ReplicatedStorage").Network.LuckyDice_ConsumeMega:InvokeServer(unpack(args))
+            elseif isfile(game.Players.LocalPlayer.Name .. "lastUsedMegaDice.txt") and tick() - tonumber(readfile(game.Players.LocalPlayer.Name .. "lastUsedMegaDice.txt")) >= 3600 and getItemAmt(getItemId("Mega Lucky Dice")) >= 1 then
+                writefile(game.Players.LocalPlayer.Name .. "lastUsedMegaDice.txt", tostring(tick()))
+                local args = {
+                    [1] = "Mega Lucky Dice",
+                    [2] = 1
+                }
+                game:GetService("ReplicatedStorage").Network.LuckyDice_ConsumeMega:InvokeServer(unpack(args))
+            end
+        end
+    end)
+end
+
+-- auto merchant
+if autoRng.autoBuyMerchant then
+    spawn(function()
+        while wait(5) do
+            for i = 1, 6 do
+                for k = 1, 2 do
+                    buyMerchant(i)
+                    wait(0.5)
+                end
+            end
+        end
+    end)
+end
+
+-- auto upgrade
+if autoRng.autoUpgrade then
+    spawn(function()
+        while wait(10) do
+            upgrade('RNGHatchSpeed')
+            upgrade('RNGEggLuck')
+            upgrade('RNGBonusLuck')
+            upgrade('RNGHugeLuck')
+            upgrade("RNGExtraEgg")
+        end
+    end)
+end
+
+-- auto roll
+if autoRng.autoRoll then
+    spawn(function()
+        while task.wait(autoRng.autoRollTime) do
+            if roll then
+                game:GetService("ReplicatedStorage").Network.Rng_Roll:InvokeServer("First")
+            end
+        end
+    end)
+end
+
+
+-- auto sell
+if autoRng.autoSellPets then
+    spawn(function()
+        while task.wait(10) do
+            local sellTable = {}
+            for i, v in pairs(save.Get().Inventory.Pet) do
+                if not string.find(v.id, "Huge") or not string.find(v.id, "Titanic") and v._am and v._am >= 1 then
+                    sellTable[i] = v._am
+                end
+            end
+
+            game:GetService("ReplicatedStorage").Network.RngEventPetMerchant_Activate:InvokeServer(sellTable)
+        end
+    end)
+end
+
+--#endregion
+
+
+--save.Get().TotalRngPoints
+--save.Get().RNGEventUpgrades
+--save.Get().RngRolls
+
+--[[
+-- Script generated by SimpleSpy - credits to exx#9394
+
+local args = {
+    [1] = "Mega Lucky Dice II",
+    [2] = 1
+}
+
+game:GetService("ReplicatedStorage").Network.LuckyDice_ConsumeMega:InvokeServer(unpack(args))
+]]
